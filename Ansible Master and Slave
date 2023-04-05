@@ -1,0 +1,18 @@
+Create two instances name it as master and slave 
+Connect to master and install Install Ansible by uisng the following command 
+amazon-linux-extras install ansible2 -y
+Install dependencies "yum install pytho python-pip python-level openssl -y"
+Add user by using linux command "useradd ansible"
+Give password to the user by using the command "passwd ansible"
+Give root permissions to user by using command "visudo" and go to 100th line under the 100th line give root permissions to ansible "ansible ALL=(ALL)       NOPASSWD: ALL"
+After saving the changes give command "vi /etc/ssh/sshd_config" go to 63rd line change password authentication as "Yes" save the changes
+Restart sshd "systemctl restart sshd"
+SLAVE SET UP 
+Follow the same process from step 5 to step 9
+Switch to master server go to ansible user by using command "su - ansible"
+Generate key "ssh-keygen" press enter for 3times to generate key
+Connect slave to master by taking slave private IP address give command "ssh-copy-id ansible@private/publicIP" select "yes" and enter password
+Give command "ssh ansible@public/privateIP" 
+Go to master change from ansible user to root user give command " vi /etc/ansible/ansible.cfg" uncomment "inventory and sudo user lines" 
+Go to the file "vi path mentioned in inventory" under example 2 crete a group "[group name]" in the next line enter private/publicIP
+SLAVE IS CONNECTED check by using command "ansible all --list-hosts"
